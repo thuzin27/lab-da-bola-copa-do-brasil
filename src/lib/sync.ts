@@ -60,6 +60,13 @@ export async function syncJogos(): Promise<SyncResult> {
       disputado,
       fase,
       dataJogo,
+      round,
+      status: ev.strStatus ?? null,
+      estadio: ev.strVenue ?? null,
+      idTimeCasa: ev.idHomeTeam ?? null,
+      idTimeFora: ev.idAwayTeam ?? null,
+      escudoCasa: ev.strHomeTeamBadge ?? null,
+      escudoFora: ev.strAwayTeamBadge ?? null,
     }
 
     const existing = await prisma.jogo.findUnique({ where: { idExterno: ev.idEvent } })

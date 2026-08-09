@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lab da Bola — Copa do Brasil 2026
+
+Next.js app para acompanhar os jogos da Copa do Brasil 2026, com sync automático via TheSportsDB.
 
 ## Getting Started
 
