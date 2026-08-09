@@ -9,6 +9,10 @@ const EventSchema = z.object({
   idEvent: z.string(),
   strHomeTeam: z.string(),
   strAwayTeam: z.string(),
+  idHomeTeam: z.string().nullable().optional(),
+  idAwayTeam: z.string().nullable().optional(),
+  strHomeTeamBadge: z.string().nullable().optional(),
+  strAwayTeamBadge: z.string().nullable().optional(),
   intHomeScore: z.string().nullable().optional(),
   intAwayScore: z.string().nullable().optional(),
   intRound: z.string(),
@@ -16,6 +20,7 @@ const EventSchema = z.object({
   strTimestamp: z.string().nullable().optional(),
   dateEvent: z.string().nullable().optional(),
   strTime: z.string().nullable().optional(),
+  strVenue: z.string().nullable().optional(),
 })
 
 const ResponseSchema = z.object({
