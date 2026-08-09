@@ -11,12 +11,16 @@ export const jogoSchema = z.object({
 })
 
 /** Schema para atualização parcial de jogo (PATCH /api/jogos/[id]) */
-export const patchSchema = z.object({
-  golsCasa: z.number().int().min(0).optional(),
-  golsFora: z.number().int().min(0).optional(),
-  fase: z.string().min(1).optional(),
-  dataJogo: z.string().datetime().optional(),
-})
+export const patchSchema = z
+  .object({
+    golsCasa: z.number().int().min(0).optional(),
+    golsFora: z.number().int().min(0).optional(),
+    fase: z.string().min(1).optional(),
+    dataJogo: z.string().datetime().optional(),
+  })
+  .refine((obj) => Object.keys(obj).length > 0, {
+    message: 'Ao menos um campo deve ser fornecido',
+  })
 
 export type JogoCreateInput = z.infer<typeof jogoSchema>
 export type JogoPatchInput = z.infer<typeof patchSchema>
