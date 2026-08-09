@@ -42,5 +42,8 @@ next-env.d.ts
 
 /src/generated/prisma
 
+# graphify (saida gerada: ~2MB por worktree)
+graphify-out/
+
 .vercel
 .env*
