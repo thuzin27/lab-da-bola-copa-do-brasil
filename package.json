@@ -16,7 +16,6 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
-    "graphify": "^1.0.0",
     "next": "16.3.0",
     "pg": "^8.23.0",
     "prisma": "^7.9.1",
