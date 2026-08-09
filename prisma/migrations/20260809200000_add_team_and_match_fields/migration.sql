@@ -1,0 +1,7 @@
+ALTER TABLE "Jogo" ADD COLUMN "idTimeCasa" TEXT;
+ALTER TABLE "Jogo" ADD COLUMN "idTimeFora" TEXT;
+ALTER TABLE "Jogo" ADD COLUMN "escudoCasa" TEXT;
+ALTER TABLE "Jogo" ADD COLUMN "escudoFora" TEXT;
+ALTER TABLE "Jogo" ADD COLUMN "round"      INTEGER;
+ALTER TABLE "Jogo" ADD COLUMN "status"     TEXT;
+ALTER TABLE "Jogo" ADD COLUMN "estadio"    TEXT;

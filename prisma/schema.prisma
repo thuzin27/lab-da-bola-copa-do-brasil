@@ -8,14 +8,21 @@ datasource db {
 }
 
 model Jogo {
-  id         Int      @id @default(autoincrement())
-  idExterno  String?  @unique
-  timeCasa   String
-  timeFora   String
-  golsCasa   Int      @default(0)
-  golsFora   Int      @default(0)
-  disputado  Boolean  @default(false)
-  fase       String
-  dataJogo   DateTime
-  createdAt  DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  idExterno   String?  @unique
+  timeCasa    String
+  timeFora    String
+  golsCasa    Int      @default(0)
+  golsFora    Int      @default(0)
+  disputado   Boolean  @default(false)
+  fase        String
+  dataJogo    DateTime
+  createdAt   DateTime @default(now())
+  idTimeCasa  String?
+  idTimeFora  String?
+  escudoCasa  String?
+  escudoFora  String?
+  round       Int?
+  status      String?
+  estadio     String?
 }
