@@ -14,10 +14,15 @@ function isDisputado(ev: SportsDbEvent): boolean {
 }
 
 function parseDataJogo(ev: SportsDbEvent): Date {
-  if (ev.strTimestamp) return new Date(ev.strTimestamp)
+  if (ev.strTimestamp) {
+    // TheSportsDB entrega strings UTC sem sufixo Z — forçar UTC explícito
+    const ts = /[Z+]/.test(ev.strTimestamp) ? ev.strTimestamp : ev.strTimestamp + 'Z'
+    return new Date(ts)
+  }
   const date = ev.dateEvent ?? '2026-01-01'
   const time = ev.strTime ?? '00:00:00'
-  return new Date(`${date}T${time}`)
+  // strTime também é UTC — forçar Z para não depender do fuso da máquina
+  return new Date(`${date}T${time}Z`)
 }
 
 export type SyncResult = {
