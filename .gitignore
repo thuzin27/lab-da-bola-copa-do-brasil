@@ -45,5 +45,8 @@ next-env.d.ts
 # graphify (saida gerada: ~2MB por worktree)
 graphify-out/
 
+# permissoes locais do Claude Code (especificas da maquina)
+.claude/settings.local.json
+
 .vercel
 .env*
