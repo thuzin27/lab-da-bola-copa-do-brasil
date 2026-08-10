@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
+import { ESCUDO_PLACEHOLDER } from '@/lib/competicao'
 
 const jogoSchema = z.object({
   timeCasa: z.string().min(1),
