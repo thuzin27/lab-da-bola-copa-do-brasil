@@ -39,6 +39,14 @@ export async function syncJogos(): Promise<SyncResult> {
     throw new Error('TheSportsDB retornou zero eventos. Verifique o ID do campeonato e a season.')
   }
 
+  // Busca os idExterno já existentes em uma única query — elimina N+1
+  const idExternos = events.map((ev) => ev.idEvent)
+  const existingRows = await prisma.jogo.findMany({
+    where: { idExterno: { in: idExternos } },
+    select: { idExterno: true },
+  })
+  const existingSet = new Set(existingRows.map((r) => r.idExterno))
+
   let criados = 0
   let atualizados = 0
   let ignorados = 0
@@ -69,9 +77,7 @@ export async function syncJogos(): Promise<SyncResult> {
       escudoFora: ev.strAwayTeamBadge ?? null,
     }
 
-    const existing = await prisma.jogo.findUnique({ where: { idExterno: ev.idEvent } })
-
-    if (!existing) {
+    if (!existingSet.has(ev.idEvent)) {
       await prisma.jogo.create({ data: { ...data, idExterno: ev.idEvent } })
       criados++
     } else {

@@ -25,4 +25,6 @@ model Jogo {
   round       Int?
   status      String?
   estadio     String?
+
+  @@index([dataJogo])
 }

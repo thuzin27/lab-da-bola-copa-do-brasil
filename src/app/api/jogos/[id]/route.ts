@@ -4,6 +4,8 @@ import { updateJogo, deleteJogo, JogoNotFoundError } from '@/lib/jogos'
 import { parseId } from '@/lib/utils'
 import { badRequest, notFound, serverError } from '@/lib/responses'
 
+export const maxDuration = 10
+
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }

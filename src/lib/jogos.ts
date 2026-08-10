@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { Prisma } from '@/generated/prisma/client'
 import type { JogoCreateInput, JogoPatchInput } from '@/lib/schemas'
 
 /** Retorna todos os jogos ordenados por data decrescente. */
@@ -35,16 +36,28 @@ export async function getJogoOrThrow(id: number) {
 
 /** Atualiza campos parciais de um jogo. Lança JogoNotFoundError se não existir. */
 export async function updateJogo(id: number, data: JogoPatchInput) {
-  await getJogoOrThrow(id)
   const updateData: Parameters<typeof prisma.jogo.update>[0]['data'] = { ...data }
   if (data.dataJogo) {
     updateData.dataJogo = new Date(data.dataJogo)
   }
-  return prisma.jogo.update({ where: { id }, data: updateData })
+  try {
+    return await prisma.jogo.update({ where: { id }, data: updateData })
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2025') {
+      throw new JogoNotFoundError(id)
+    }
+    throw err
+  }
 }
 
 /** Remove um jogo. Lança JogoNotFoundError se não existir. */
 export async function deleteJogo(id: number) {
-  await getJogoOrThrow(id)
-  await prisma.jogo.delete({ where: { id } })
+  try {
+    await prisma.jogo.delete({ where: { id } })
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2025') {
+      throw new JogoNotFoundError(id)
+    }
+    throw err
+  }
 }

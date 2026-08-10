@@ -3,6 +3,8 @@ import { jogoSchema } from '@/lib/schemas'
 import { listJogos, createJogo } from '@/lib/jogos'
 import { badRequest, serverError } from '@/lib/responses'
 
+export const maxDuration = 10
+
 export async function GET() {
   try {
     const jogos = await listJogos()

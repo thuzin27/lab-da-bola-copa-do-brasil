@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server'
 import { syncJogos } from '@/lib/sync'
 import { unauthorized, serverError } from '@/lib/responses'
 
+export const maxDuration = 60
+
 function isAuthorized(request: NextRequest): boolean {
   // Vercel cron: envia Authorization: Bearer <CRON_SECRET>
   const auth = request.headers.get('authorization')

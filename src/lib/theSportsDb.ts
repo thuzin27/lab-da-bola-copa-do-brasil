@@ -62,10 +62,7 @@ async function fetchRound(round: number): Promise<SportsDbEvent[]> {
 }
 
 export async function fetchAllRounds(): Promise<SportsDbEvent[]> {
-  const results: SportsDbEvent[] = []
-  for (const round of ROUNDS) {
-    const events = await fetchRound(round)
-    results.push(...events)
-  }
-  return results
+  // Busca todos os rounds em paralelo — reduz latência total de soma(latências) para max(latências)
+  const perRound = await Promise.all(ROUNDS.map((round) => fetchRound(round)))
+  return perRound.flat()
 }
