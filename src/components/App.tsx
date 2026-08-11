@@ -31,15 +31,18 @@ function isAbaId(s: string | null): s is AbaId {
 
 function CopaDoBrasilLogo() {
   const [src, setSrc] = useState('/copa-do-brasil.svg')
+  const [hidden, setHidden] = useState(false)
+  if (hidden) return null
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       alt="Copa do Brasil 2026"
       height={40}
-      style={{ height: 40, width: 'auto', objectFit: 'contain', minWidth: 24 }}
+      style={{ height: 40, width: 'auto', maxWidth: 160, objectFit: 'contain', minWidth: 24 }}
       onError={() => {
         if (src !== COPA_DO_BRASIL.logo) setSrc(COPA_DO_BRASIL.logo)
+        else setHidden(true)
       }}
     />
   )
@@ -131,10 +134,12 @@ export function App() {
       <main className="max-w-7xl mx-auto px-4 py-6" lang="pt-BR">
 
         {/* ── Tablist (task 02) ──────────────────────────────────────────── */}
+        {/* Wrapper relativo para o gradient indicador de scroll em mobile */}
+        <div className="relative mb-8">
         <div
           role="tablist"
           aria-label="Navegação das seções"
-          className="flex border-b border-gray-800 mb-8"
+          className="flex border-b border-gray-800 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {ABAS.map((aba, idx) => (
             <button
@@ -147,17 +152,20 @@ export function App() {
               tabIndex={abaAtiva === aba.id ? 0 : -1}
               onClick={() => setAba(aba.id)}
               onKeyDown={e => handleTabKeyDown(e, idx)}
-              className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors
+              className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors shrink-0
                 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400
                 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950 ${
                 abaAtiva === aba.id
                   ? 'border-gray-100 text-gray-100'
-                  : 'border-transparent text-gray-500 hover:text-gray-300 hover:border-gray-600'
+                  : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-600'
               }`}
             >
               {aba.label}
             </button>
           ))}
+        </div>
+        {/* Gradient fade direito — indica abas fora da área visível em mobile */}
+        <div className="pointer-events-none absolute right-0 top-0 bottom-px w-8 bg-gradient-to-l from-gray-950 to-transparent sm:hidden" />
         </div>
 
         {/* ── Estados de carregamento ────────────────────────────────────── */}
