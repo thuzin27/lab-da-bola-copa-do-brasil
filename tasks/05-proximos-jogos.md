@@ -6,19 +6,29 @@
 
 Nova aba mostrando os próximos jogos, com data, horário, escudos e competição.
 
-## O problema de escopo
+## ATUALIZADO em 11/08 — o sorteio saiu
 
-**A Copa do Brasil não tem nenhum jogo futuro.** Conferido na fonte em
-11/08/2026:
+Este arquivo foi escrito quando a Copa não tinha jogo futuro nenhum. **Mudou
+no mesmo dia:** o sync das 12:00 UTC trouxe as quartas de final.
 
 ```
-eventsnextleague.php?id=4725      -> 0 eventos
-eventsround.php?id=4725&r=8       -> 0 eventos (quartas, sorteio pendente)
+Internacional x Grêmio          ida 26/08 18:30 · volta 02/09 18:30
+Palmeiras x Santos              ida 26/08 18:30 · volta 02/09 18:30
+Vasco da Gama x Vitória         ida 26/08 18:30 · volta 02/09 18:30
+Cruzeiro x Atlético Mineiro     ida 26/08 18:30 · volta 02/09 18:30
 ```
 
-Uma aba só com a Copa nasce vazia. Por isso a aba usa o **Brasileirão Série A
-2026** (liga **4351**) como fonte principal, e passa a incluir a Copa
-automaticamente quando as quartas forem sorteadas.
+São **8 jogos da Copa**, todos por disputar. O banco passou de 99 para 107.
+
+**Consequência para o escopo:** a aba já tem conteúdo próprio da Copa e não
+depende mais do Brasileirão para nascer preenchida. O Brasileirão passa a ser
+**opcional** — decida com o Arthur antes de sincronizar liga nova, porque ele
+traz junto o campo `competicao`, o risco de poluir as outras abas e mais 200
+registros no banco.
+
+Recomendação: **fazer a aba só com a Copa primeiro.** É menos código, sem
+migration nova, sem risco de contaminar chaveamento e fases anteriores. O
+Brasileirão entra depois, se ainda fizer sentido.
 
 ## Dados disponíveis (conferido em 11/08/2026)
 

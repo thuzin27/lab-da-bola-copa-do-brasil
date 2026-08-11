@@ -62,7 +62,7 @@ function slotToJogos(slot: SimSlot, round: number, slotIdx: number): Jogo[] {
   const golsB = Math.max(0, parseInt(slot.golsB, 10) || 0)
   const base = -(round * 100 + slotIdx * 2)
   const common = {
-    idExterno: null, disputado: true, fase,
+    idExterno: null, idApiFootball: null, disputado: true, fase,
     createdAt: SIM_DATE_IDA, round, status: 'FT' as const,
     estadio: null, isSimulado: true as const,
   }

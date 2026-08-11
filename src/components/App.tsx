@@ -11,6 +11,8 @@ import { BracketMobile } from './BracketMobile'
 import { FasesAnteriores } from './FasesAnteriores'
 import { SimulacaoForm } from './SimulacaoForm'
 import { ProximosJogos } from './ProximosJogos'
+import { MatchDetailModal } from './MatchDetailModal'
+import type { Confronto } from '@/lib/bracket'
 
 // ─── Abas ────────────────────────────────────────────────────────────────────
 
@@ -64,6 +66,41 @@ export function App() {
   const [loading, setLoading] = useState(true)
   const [fetchError, setFetchError] = useState<string | null>(null)
   const [liveScores, setLiveScores] = useState<Record<string, { golsCasa: number | null; golsFora: number | null }>>({})
+  const [partidaSelecionada, setPartidaSelecionada] = useState<Parameters<typeof MatchDetailModal>[0]['partida'] | null>(null)
+
+  function abrirDetalhesConfrontoId(c: Confronto) {
+    // Para o confronto do bracket buscamos o jogo real para ter data e estádio
+    const legReal = jogosReais.find(j =>
+      j.idApiFootball === c.idApiFootball && j.idApiFootball !== null
+    )
+    setPartidaSelecionada({
+      timeCasa: c.timeA.nome,
+      timeFora: c.timeB.nome,
+      escudoCasa: c.timeA.escudo,
+      escudoFora: c.timeB.escudo,
+      golsCasa: c.golsA,
+      golsFora: c.golsB,
+      disputado: c.jogado,
+      dataJogo: legReal?.dataJogo ?? new Date().toISOString(),
+      estadio: legReal?.estadio ?? null,
+      idApiFootball: c.idApiFootball,
+    })
+  }
+
+  function abrirDetalhesJogo(j: Jogo) {
+    setPartidaSelecionada({
+      timeCasa: j.timeCasa,
+      timeFora: j.timeFora,
+      escudoCasa: j.escudoCasa,
+      escudoFora: j.escudoFora,
+      golsCasa: j.golsCasa,
+      golsFora: j.golsFora,
+      disputado: j.disputado,
+      dataJogo: j.dataJogo,
+      estadio: j.estadio,
+      idApiFootball: j.idApiFootball,
+    })
+  }
 
 
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
@@ -240,10 +277,10 @@ export function App() {
             >
               <section aria-label="Chaveamento mata-mata">
                 <div className="hidden lg:block overflow-x-auto">
-                  <BracketDesktop jogos={jogosParaBracket} />
+                  <BracketDesktop jogos={jogosParaBracket} onCardClick={abrirDetalhesConfrontoId} />
                 </div>
                 <div className="lg:hidden">
-                  <BracketMobile jogos={jogosParaBracket} />
+                  <BracketMobile jogos={jogosParaBracket} onCardClick={abrirDetalhesConfrontoId} />
                 </div>
               </section>
             </div>
@@ -255,7 +292,7 @@ export function App() {
               aria-labelledby="tab-fases-anteriores"
               hidden={abaAtiva !== 'fases-anteriores'}
             >
-              <FasesAnteriores jogos={jogosReais} />
+              <FasesAnteriores jogos={jogosReais} onJogoClick={abrirDetalhesJogo} />
             </div>
 
             {/* ── Painel: Simulação (task 06) ──────────────────────────── */}
@@ -283,6 +320,13 @@ export function App() {
           </>
         )}
       </main>
+
+      {partidaSelecionada && (
+        <MatchDetailModal
+          partida={partidaSelecionada}
+          onClose={() => setPartidaSelecionada(null)}
+        />
+      )}
     </div>
   )
 }

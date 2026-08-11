@@ -25,7 +25,8 @@ model Jogo {
   round       Int?
   status      String?
   estadio     String?
-  competicao  String   @default("copa-do-brasil")
+  competicao    String   @default("copa-do-brasil")
+  idApiFootball String?
 
   @@index([dataJogo])
 }

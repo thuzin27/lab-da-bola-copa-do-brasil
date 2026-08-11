@@ -17,6 +17,7 @@ export type Jogo = {
   status: string | null
   estadio: string | null
   competicao?: string
+  idApiFootball: string | null
   isSimulado?: boolean
 }
 
@@ -39,6 +40,7 @@ export const JOGOS_MOCK: Jogo[] = [
     round: 16,
     status: 'FT',
     estadio: null,
+    idApiFootball: null,
   },
   {
     id: 2,
@@ -58,6 +60,7 @@ export const JOGOS_MOCK: Jogo[] = [
     round: 16,
     status: 'FT',
     estadio: null,
+    idApiFootball: null,
   },
   {
     id: 3,
@@ -77,6 +80,7 @@ export const JOGOS_MOCK: Jogo[] = [
     round: 16,
     status: 'FT',
     estadio: null,
+    idApiFootball: null,
   },
   {
     id: 4,
@@ -96,5 +100,6 @@ export const JOGOS_MOCK: Jogo[] = [
     round: 16,
     status: 'NS',
     estadio: null,
+    idApiFootball: null,
   },
 ]

@@ -28,10 +28,22 @@ Vitória · Internacional · Palmeiras · Vasco da Gama
 Grêmio · Cruzeiro · Santos · Atlético Mineiro
 ```
 
-**Quartas.** O sorteio ainda não aconteceu, então o usuário monta os
-confrontos. Ofereça as duas formas:
-- arrastar/selecionar quem enfrenta quem
-- botão "Sortear confrontos" que embaralha os 8
+**Quartas — ATUALIZADO em 11/08.** O sorteio saiu no mesmo dia em que este
+arquivo foi escrito. Os confrontos são **reais** e estão no banco:
+
+```
+Internacional x Grêmio        · Palmeiras x Santos
+Vasco da Gama x Vitória       · Cruzeiro x Atlético Mineiro
+ida 26/08 18:30 · volta 02/09 18:30
+```
+
+Então **não peça ao usuário para montar as quartas**: leia do banco (`round`
+8) e apresente os quatro confrontos prontos, esperando só o placar. Sortear
+confronto que já existe seria inventar dado.
+
+A montagem manual continua valendo para **semifinal e final**, que ainda não
+têm chaveamento definido — ali sim o usuário decide, ou a aplicação segue a
+ordem do bracket.
 
 **Placar.** Para cada confronto, dois campos de gols. Vencedor calculado pelo
 agregado. Empate no agregado → o usuário escolhe quem passa nos pênaltis

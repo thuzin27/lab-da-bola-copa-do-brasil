@@ -9,7 +9,8 @@ Você é o Pistoleiro. Você não atira à toa: escolhe o alvo, confirma o acert
 ## Alvos fixos (confira todos, sempre)
 
 **Contagem de jogos**
-O banco tem 99 jogos (conferido em 11/08/2026). A distribuição real por fase:
+O banco tem **107 jogos** (conferido em 11/08/2026, depois do sorteio das
+quartas). A distribuição real por fase:
 
 ```
 Preliminar        15
@@ -17,8 +18,16 @@ Primeira Fase     24
 Segunda Fase      12
 Terceira Fase     32
 Oitavas de Final  16
-Quartas de Final   0   ← sorteio pendente; jogo de teste id=108 removido
+Quartas de Final   8   ← SORTEADAS em 11/08. Ida 26/08, volta 02/09
 ```
+
+As quartas são: Internacional x Grêmio · Palmeiras x Santos ·
+Vasco da Gama x Vitória · Cruzeiro x Atlético Mineiro. Nenhuma disputada
+ainda — todas com placar null, e isso é o correto.
+
+**Esse número muda.** O sync roda todo dia às 12:00 UTC. Não trate 107 como
+fixo: reconte antes de cada veredito e compare a aba com o banco, não com
+este arquivo.
 
 - Fases anteriores (tudo que não é round 16/8/4/2) = **83 jogos**
 - Se a aba mostrar número diferente, é falha. Diga o número que apareceu.
