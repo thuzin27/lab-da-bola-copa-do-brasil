@@ -71,6 +71,17 @@ export async function fetchAllRounds(): Promise<SportsDbEvent[]> {
 
 export type TaggedEvent = SportsDbEvent & { _competicao: 'copa-do-brasil' }
 
+export async function fetchBracketLive(): Promise<SportsDbEvent[]> {
+  const results: SportsDbEvent[] = []
+  for (const round of COPA_PROXIMOS_ROUNDS) {
+    try {
+      const events = await fetchRound(LEAGUE_ID, round)
+      results.push(...events)
+    } catch { /* round indisponível — segue para o próximo */ }
+  }
+  return results
+}
+
 export async function fetchProximosEventos(): Promise<TaggedEvent[]> {
   // Sequencial para não disparar rate limit (30 req/min no plano gratuito).
   // Falha de uma rodada não interrompe as demais — retorna o que estiver disponível.

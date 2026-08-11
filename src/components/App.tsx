@@ -63,6 +63,8 @@ export function App() {
   const [jogosSimulados, setJogosSimulados] = useState<Jogo[]>([])
   const [loading, setLoading] = useState(true)
   const [fetchError, setFetchError] = useState<string | null>(null)
+  const [liveScores, setLiveScores] = useState<Record<string, { golsCasa: number | null; golsFora: number | null }>>({})
+
 
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
 
@@ -86,6 +88,21 @@ export function App() {
   useEffect(() => {
     const idx = ABAS.findIndex(a => a.id === abaAtiva)
     tabRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
+  }, [abaAtiva])
+
+  useEffect(() => {
+    if (abaAtiva !== 'chaveamento') return
+    async function fetchLive() {
+      try {
+        const res = await fetch('/api/livescore')
+        if (!res.ok) return
+        const data: { idExterno: string; golsCasa: number | null; golsFora: number | null }[] = await res.json()
+        setLiveScores(Object.fromEntries(data.map(s => [s.idExterno, { golsCasa: s.golsCasa, golsFora: s.golsFora }])))
+      } catch { /* falha silenciosa — mostra último valor conhecido */ }
+    }
+    void fetchLive()
+    const id = setInterval(() => { void fetchLive() }, 60_000)
+    return () => clearInterval(id)
   }, [abaAtiva])
 
   function reload() {
@@ -116,7 +133,11 @@ export function App() {
   const jogosParaBracket: Jogo[] = [
     ...(hasBracketData ? jogosReais : JOGOS_MOCK),
     ...jogosSimulados,
-  ]
+  ].map(j => {
+    const live = j.idExterno ? liveScores[j.idExterno] : undefined
+    if (!live || live.golsCasa === null || live.golsFora === null) return j
+    return { ...j, golsCasa: live.golsCasa, golsFora: live.golsFora }
+  })
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
