@@ -18,7 +18,7 @@ export function BracketMobile({ jogos }: { jogos: Jogo[] }) {
             {confrontos.length === 0 ? (
               <EmptySlot />
             ) : (
-              <div className="space-y-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {confrontos.map(c => <MatchCard key={c.id} confronto={c} />)}
               </div>
             )}

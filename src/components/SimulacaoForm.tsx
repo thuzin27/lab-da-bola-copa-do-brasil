@@ -214,8 +214,8 @@ export function SimulacaoForm({
   }
 
   return (
-    <div className="space-y-8 max-w-2xl">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8 w-full max-w-2xl">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-xs text-gray-400">Simulação local — F5 descarta os resultados.</p>
         <button type="button" onClick={resetar}
           className="text-xs text-red-500 hover:text-red-400 underline focus:outline-none focus:ring-1 focus:ring-red-500 rounded"

@@ -170,7 +170,7 @@ export function App() {
               aria-hidden="true"
               className="h-8"
             />
-            <span className="text-lg font-semibold text-gray-100">Lab da Bola</span>
+            <span className="hidden sm:inline text-lg font-semibold text-gray-100">Lab da Bola</span>
           </div>
           <CopaDoBrasilLogo />
         </div>
@@ -197,7 +197,7 @@ export function App() {
               tabIndex={abaAtiva === aba.id ? 0 : -1}
               onClick={() => setAba(aba.id)}
               onKeyDown={e => handleTabKeyDown(e, idx)}
-              className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors shrink-0
+              className={`px-3 py-2 text-xs sm:px-4 sm:py-2.5 sm:text-sm font-medium border-b-2 -mb-px transition-colors shrink-0
                 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400
                 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950 ${
                 abaAtiva === aba.id
@@ -239,10 +239,10 @@ export function App() {
               hidden={abaAtiva !== 'chaveamento'}
             >
               <section aria-label="Chaveamento mata-mata">
-                <div className="hidden md:block overflow-x-auto">
+                <div className="hidden lg:block overflow-x-auto">
                   <BracketDesktop jogos={jogosParaBracket} />
                 </div>
-                <div className="md:hidden">
+                <div className="lg:hidden">
                   <BracketMobile jogos={jogosParaBracket} />
                 </div>
               </section>
