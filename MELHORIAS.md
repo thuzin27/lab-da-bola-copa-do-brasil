@@ -9,8 +9,10 @@ Levantada a partir do código real na `main` em 10/08/2026, não de memória.
 
 ## Estado atual — o que já está pronto
 
-- Sync com a TheSportsDB, 99 jogos da Copa do Brasil 2026, com escudos,
-  `round`, `status` e `estadio`
+- Sync com a TheSportsDB, **99 jogos** da Copa do Brasil 2026 (11/08/2026),
+  com escudos, `round`, `status` e `estadio`:
+  Preliminar 15 · Primeira Fase 24 · Segunda Fase 12 · Terceira Fase 32 ·
+  Oitavas 16 · Quartas 0 (sorteio pendente)
 - Chaveamento das oitavas até a final, com agregado, detecção de pênaltis e
   slots "A definir"
 - Bug de fuso corrigido (`strTime` já vem em UTC)
@@ -25,36 +27,51 @@ sessão morreu antes. É a primeira coisa a fazer.
 
 ---
 
-## Front — pendências
+## Front — o que a Fase 3 já fechou (commit 8f02445)
 
-### Arquitetura da UI
+- ✅ `page.tsx` de 479 → **16 linhas**
+- ✅ `src/components/` criado com 9 componentes (App, BracketDesktop,
+  BracketMobile, BracketConnectors, MatchCard, EmptySlot, Escudo,
+  FasesAnteriores, SimulacaoForm)
+- ✅ Abas acessíveis com `role="tab"` / `aria-selected`
+- ✅ Header com logo da Copa
+- ✅ "Fases anteriores" migrado do colapsável para aba
+- ✅ Simulação 100% client-side, sem escrita no banco
 
-- **`src/app/page.tsx` tem 479 linhas e concentra tudo.** Não existe
-  `src/components/`. O chaveamento, os cards de confronto, o formulário e a
-  listagem estão todos no mesmo arquivo.
-- **A página inteira é `'use client'`.** Sem SSR: o HTML chega vazio, o
-  Google não indexa e o primeiro paint espera o JavaScript. Boa parte disso
-  poderia ser server component, com apenas o formulário no cliente.
+Estatística de jogadores segue **descartada**: a TheSportsDB no plano
+gratuito retorna `null` em `lookupeventstats` e `lookuplineup`, e
+`lookup_all_players` traz só 10 nomes por time sem nenhum número.
 
-### Navegação por abas
+## Front — pendências (trabalho do Quarteto Fantástico)
 
-Só três abas foram definidas como escopo: **Jogos**, **Chaveamento** e
-**Probabilidade**. Hoje não existe navegação real entre elas — verificar se
-foi implementado como abas acessíveis (`role="tablist"`, setas do teclado,
-estado na URL) ou só como seções empilhadas.
+O Quarteto **ainda não rodou**. Estes itens continuam abertos:
 
-Estatística de jogadores foi **descartada**: a TheSportsDB no plano gratuito
-retorna `null` em `lookupeventstats` e `lookuplineup`, e `lookup_all_players`
-traz só 10 nomes por time sem nenhum número.
+### Performance e renderização — `tocha-humana`
 
-### Visual
+- **Os 9 componentes são `'use client'`, sem exceção.** Os dados chegam por
+  `fetch('/api/jogos')` dentro de `useEffect`, então o HTML de produção sai
+  vazio: sem SSR, sem indexação, primeiro paint esperando o JavaScript.
+  A extração em componentes não resolveu isso — só reorganizou.
+- O chaveamento e as fases anteriores são conteúdo estático por request:
+  candidatos naturais a server component, deixando no cliente apenas a
+  troca de abas e o formulário de simulação.
 
-- Cabeçalho verde muito saturado, destoa do resto que é escuro e sóbrio
-- Falta hierarquia: data, times e placar competem pela mesma atenção; o
-  placar deveria dominar
-- Vão morto entre as colunas em tela larga
-- Existe `public/escudo-placeholder.svg` — confirmar que está sendo usado
-  quando `escudoCasa`/`escudoFora` são null (caso Betim x Piauí)
+### Robustez visual — `sr-fantastico` + `o-coisa`
+
+- **`Escudo.tsx` não referencia `escudo-placeholder.svg`.** O componente
+  aceita `src: string | null`, mas o arquivo em `public/` não é usado.
+  Confirmar o que aparece hoje quando o escudo é null (caso Betim x Piauí).
+- Hierarquia visual: data, times e placar competem pela mesma atenção; o
+  placar deveria dominar.
+- Vão morto entre as colunas do bracket em tela larga.
+- Revisar a saturação do cabeçalho no tema escuro.
+
+### Acessibilidade — `mulher-invisivel`
+
+- Navegação por setas do teclado entre abas (o `role` está, falta confirmar
+  o comportamento).
+- Aba ativa refletida na URL, para recarregar e botão voltar funcionarem.
+- Contraste AA nos dois temas.
 
 ---
 
