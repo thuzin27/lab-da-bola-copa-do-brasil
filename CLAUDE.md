@@ -35,6 +35,13 @@ e aplique com `migrate deploy`.
 Scripts `tsx` precisam de `--env-file=.env.local` porque `import` de módulos é
 hoistado antes das chamadas `dotenv.config()`.
 
+## Idioma
+
+Responda sempre em **português do Brasil**, inclusive nos blocos de
+raciocínio, nos relatórios de subagente e nas mensagens de commit. Nomes de
+arquivo, código, comandos e termos técnicos consagrados (build, commit,
+deploy, merge) ficam como estão.
+
 ## O projeto
 
 Lab da Bola — painel da Copa do Brasil. Next.js (App Router) + TypeScript +
