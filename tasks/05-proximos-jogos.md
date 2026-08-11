@@ -9,7 +9,20 @@ Nova aba mostrando os próximos jogos, com data, horário, escudos e competiçã
 ## ATUALIZADO em 11/08 — o sorteio saiu
 
 Este arquivo foi escrito quando a Copa não tinha jogo futuro nenhum. **Mudou
-no mesmo dia:** o sync das 12:00 UTC trouxe as quartas de final.
+no mesmo dia:** a CBF sorteou as quartas na manhã de 11/08, no Rio.
+
+⚠️ **Esses 8 jogos NÃO vieram do sync.** A TheSportsDB ainda retorna 0
+eventos no `round` 8. Eles foram inseridos à mão por
+`scripts/seed-quartas-2026.ts`, direto no banco de produção, e por isso têm
+`idExterno` null.
+
+Confrontos e mandos conferem com a imprensa. **Os horários não**: o script
+usa 18:30 para os quatro jogos, marcado no próprio código como provisório.
+A CBF escalona por transmissão, então esses horários vão mudar.
+
+Quando a TheSportsDB publicar o `round` 8, rodar
+`scripts/cleanup-quartas-manuais.ts` (tem dry-run por padrão) para remover os
+manuais e ficar só com os oficiais.
 
 ```
 Internacional x Grêmio          ida 26/08 18:30 · volta 02/09 18:30
