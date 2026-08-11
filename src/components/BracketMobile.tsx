@@ -1,11 +1,11 @@
 'use client'
 
 import type { Jogo } from '@/types/jogo'
-import { BRACKET_ROUNDS, deriveConfrontos } from '@/lib/bracket'
+import { BRACKET_ROUNDS, deriveConfrontos, type Confronto } from '@/lib/bracket'
 import { MatchCard } from './MatchCard'
 import { EmptySlot } from './EmptySlot'
 
-export function BracketMobile({ jogos }: { jogos: Jogo[] }) {
+export function BracketMobile({ jogos, onCardClick }: { jogos: Jogo[]; onCardClick?: (c: Confronto) => void }) {
   return (
     <div className="space-y-8" role="region" aria-label="Chaveamento da Copa do Brasil 2026">
       {BRACKET_ROUNDS.map(({ round, label }) => {
@@ -19,7 +19,7 @@ export function BracketMobile({ jogos }: { jogos: Jogo[] }) {
               <EmptySlot />
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {confrontos.map(c => <MatchCard key={c.id} confronto={c} />)}
+                {confrontos.map(c => <MatchCard key={c.id} confronto={c} onClick={onCardClick ? () => onCardClick(c) : undefined} />)}
               </div>
             )}
           </section>

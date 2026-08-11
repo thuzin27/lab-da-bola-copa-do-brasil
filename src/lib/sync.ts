@@ -75,6 +75,7 @@ export async function syncJogos(): Promise<SyncResult> {
       idTimeFora: ev.idAwayTeam ?? null,
       escudoCasa: ev.strHomeTeamBadge ?? null,
       escudoFora: ev.strAwayTeamBadge ?? null,
+      idApiFootball: ev.idAPIfootball ?? null,
     }
 
     if (!existingSet.has(ev.idEvent)) {

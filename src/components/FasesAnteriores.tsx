@@ -13,9 +13,12 @@ function formatData(iso: string) {
   })
 }
 
-function JogoCard({ jogo }: { jogo: Jogo }) {
+function JogoCard({ jogo, onClick }: { jogo: Jogo; onClick?: () => void }) {
   return (
-    <article className="border border-gray-800 rounded bg-gray-900 px-3 py-2 text-xs">
+    <article
+      onClick={onClick}
+      className={`border border-gray-800 rounded bg-gray-900 px-3 py-2 text-xs ${onClick ? 'cursor-pointer hover:border-gray-600 transition-colors' : ''}`}
+    >
       <div className="flex items-center gap-2 mb-1.5">
         <Escudo src={jogo.escudoCasa} alt={jogo.timeCasa} size={16} />
         <span className="flex-1 truncate text-gray-300">{jogo.timeCasa}</span>
@@ -40,7 +43,7 @@ function JogoCard({ jogo }: { jogo: Jogo }) {
 // Ordem: fase mais recente primeiro (Terceira → Segunda → Primeira → Preliminar)
 const FASE_ANTERIORES_ORDER = [32, 64, 128, 1256]
 
-export function FasesAnteriores({ jogos }: { jogos: Jogo[] }) {
+export function FasesAnteriores({ jogos, onJogoClick }: { jogos: Jogo[]; onJogoClick?: (j: Jogo) => void }) {
   const anteriores = jogos.filter(j => !BRACKET_ROUND_VALUES.has(j.round ?? -1))
 
   const byRound = new Map<number, Jogo[]>()
@@ -79,7 +82,7 @@ export function FasesAnteriores({ jogos }: { jogos: Jogo[] }) {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {byRound.get(round)!.map(j => (
-              <JogoCard key={j.id} jogo={j} />
+              <JogoCard key={j.id} jogo={j} onClick={onJogoClick ? () => onJogoClick(j) : undefined} />
             ))}
           </div>
         </section>

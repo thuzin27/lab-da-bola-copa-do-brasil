@@ -1,13 +1,12 @@
 'use client'
 
 import type { Jogo } from '@/types/jogo'
-import { BRACKET_ROUNDS, BRACKET_H, COL_W, CONN_W, LABEL_H, deriveConfrontos } from '@/lib/bracket'
-import type { Confronto } from '@/lib/bracket'
+import { BRACKET_ROUNDS, BRACKET_H, COL_W, CONN_W, LABEL_H, deriveConfrontos, type Confronto } from '@/lib/bracket'
 import { MatchCard } from './MatchCard'
 import { EmptySlot } from './EmptySlot'
 import { BracketConnectors } from './BracketConnectors'
 
-export function BracketDesktop({ jogos }: { jogos: Jogo[] }) {
+export function BracketDesktop({ jogos, onCardClick }: { jogos: Jogo[]; onCardClick?: (c: Confronto) => void }) {
   const byRound = Object.fromEntries(
     BRACKET_ROUNDS.map(({ round, slots }) => {
       const derived = deriveConfrontos(jogos, round)
@@ -39,7 +38,7 @@ export function BracketDesktop({ jogos }: { jogos: Jogo[] }) {
                     style={{ position: 'absolute', top: i * slotH, height: slotH, left: 4, right: 4 }}
                     className="flex items-center"
                   >
-                    {c ? <MatchCard confronto={c} /> : <EmptySlot />}
+                    {c ? <MatchCard confronto={c} onClick={onCardClick ? () => onCardClick(c) : undefined} /> : <EmptySlot />}
                   </div>
                 ))}
               </div>

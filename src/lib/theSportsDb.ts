@@ -6,9 +6,14 @@ const SEASON = '2026'
 const ROUNDS = [1256, 128, 64, 32, 16, 8, 4, 2] as const
 // Rodadas da Copa com jogos futuros possíveis (quartas em diante)
 const COPA_PROXIMOS_ROUNDS = [8, 4, 2] as const
+// Brasileirão Série A
+const BRASILEIRAO_ID = 4351
+// Próximas duas rodadas do Brasileirão (rodadas 23 e 24, semana de 15-22/08/2026)
+const BRASILEIRAO_PROXIMOS_ROUNDS = [23, 24] as const
 
 const EventSchema = z.object({
   idEvent: z.string(),
+  idAPIfootball: z.string().nullable().optional(),
   strHomeTeam: z.string(),
   strAwayTeam: z.string(),
   idHomeTeam: z.string().nullable().optional(),
@@ -69,7 +74,7 @@ export async function fetchAllRounds(): Promise<SportsDbEvent[]> {
   return perRound.flat()
 }
 
-export type TaggedEvent = SportsDbEvent & { _competicao: 'copa-do-brasil' }
+export type TaggedEvent = SportsDbEvent & { _competicao: 'copa-do-brasil' | 'brasileirao' }
 
 export async function fetchBracketLive(): Promise<SportsDbEvent[]> {
   const results: SportsDbEvent[] = []
@@ -85,7 +90,14 @@ export async function fetchBracketLive(): Promise<SportsDbEvent[]> {
 export async function fetchProximosEventos(): Promise<TaggedEvent[]> {
   // Sequencial para não disparar rate limit (30 req/min no plano gratuito).
   // Falha de uma rodada não interrompe as demais — retorna o que estiver disponível.
+  // Fonte principal: Brasileirão (liga 4351, rodadas 23-24). Copa entra quando as quartas forem sorteadas.
   const results: TaggedEvent[] = []
+  for (const round of BRASILEIRAO_PROXIMOS_ROUNDS) {
+    try {
+      const events = await fetchRound(BRASILEIRAO_ID, round)
+      results.push(...events.map(e => ({ ...e, _competicao: 'brasileirao' as const })))
+    } catch { /* round indisponível — segue para o próximo */ }
+  }
   for (const round of COPA_PROXIMOS_ROUNDS) {
     try {
       const events = await fetchRound(LEAGUE_ID, round)

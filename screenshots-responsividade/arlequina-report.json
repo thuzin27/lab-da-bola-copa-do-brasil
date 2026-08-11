@@ -1,0 +1,127 @@
+{
+  "timestamp": "2026-08-11T18:03:51.882Z",
+  "widthResults": [
+    {
+      "width": 320,
+      "path": "D:/datakick/lab-da-bota-copa-do-brasil/screenshots-responsividade/chav-320.png",
+      "bodyScrollWidth": 320,
+      "viewportWidth": 320,
+      "hasHorizontalScroll": false,
+      "docOverflow": false,
+      "docScrollWidth": 320,
+      "docClientWidth": 320,
+      "bracketInfo": {
+        "desktopDisplay": "none",
+        "mobileDisplay": "block"
+      },
+      "labDaBola": "none"
+    },
+    {
+      "width": 640,
+      "path": "D:/datakick/lab-da-bota-copa-do-brasil/screenshots-responsividade/chav-640.png",
+      "bodyScrollWidth": 640,
+      "viewportWidth": 640,
+      "hasHorizontalScroll": false,
+      "docOverflow": false,
+      "docScrollWidth": 640,
+      "docClientWidth": 640,
+      "bracketInfo": {
+        "desktopDisplay": "none",
+        "mobileDisplay": "block"
+      },
+      "labDaBola": "block"
+    },
+    {
+      "width": 768,
+      "path": "D:/datakick/lab-da-bota-copa-do-brasil/screenshots-responsividade/chav-768.png",
+      "bodyScrollWidth": 768,
+      "viewportWidth": 768,
+      "hasHorizontalScroll": false,
+      "docOverflow": false,
+      "docScrollWidth": 768,
+      "docClientWidth": 768,
+      "bracketInfo": {
+        "desktopDisplay": "none",
+        "mobileDisplay": "block"
+      },
+      "labDaBola": "block"
+    },
+    {
+      "width": 1024,
+      "path": "D:/datakick/lab-da-bota-copa-do-brasil/screenshots-responsividade/chav-1024.png",
+      "bodyScrollWidth": 1024,
+      "viewportWidth": 1024,
+      "hasHorizontalScroll": false,
+      "docOverflow": false,
+      "docScrollWidth": 1024,
+      "docClientWidth": 1024,
+      "bracketInfo": {
+        "desktopDisplay": "block",
+        "mobileDisplay": "none"
+      },
+      "labDaBola": "block"
+    },
+    {
+      "width": 1440,
+      "path": "D:/datakick/lab-da-bota-copa-do-brasil/screenshots-responsividade/chav-1440.png",
+      "bodyScrollWidth": 1440,
+      "viewportWidth": 1440,
+      "hasHorizontalScroll": false,
+      "docOverflow": false,
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "bracketInfo": {
+        "desktopDisplay": "block",
+        "mobileDisplay": "none"
+      },
+      "labDaBola": "block"
+    }
+  ],
+  "simulacao320": {
+    "found": true,
+    "pRect": {
+      "top": 155,
+      "left": 16,
+      "right": 260.125,
+      "bottom": 171
+    },
+    "bRect": {
+      "top": 179,
+      "left": 16,
+      "right": 115.375,
+      "bottom": 195
+    },
+    "overlap": false,
+    "simScrollWidth": 320,
+    "simViewWidth": 320,
+    "hasScroll": false
+  },
+  "bracket768": {
+    "desktopDisplay": "none",
+    "mobileDisplay": "block",
+    "bodyScrollWidth": 768,
+    "viewportWidth": 768
+  },
+  "gridInfo640": [
+    "300px 300px",
+    "repeat(2, minmax(0px, 1fr))",
+    "repeat(2, minmax(0px, 1fr))",
+    "repeat(2, minmax(0px, 1fr))",
+    "repeat(2, minmax(0px, 1fr))"
+  ],
+  "gridInfo768": [
+    "364px 364px",
+    "repeat(2, minmax(0px, 1fr))",
+    "repeat(2, minmax(0px, 1fr))",
+    "repeat(2, minmax(0px, 1fr))",
+    "repeat(2, minmax(0px, 1fr))"
+  ],
+  "bracket1024": {
+    "desktopDisplay": "block",
+    "mobileDisplay": "none",
+    "bodyScrollWidth": 1024,
+    "viewportWidth": 1024,
+    "bracketWidth": 992,
+    "bracketRight": 1008
+  }
+}

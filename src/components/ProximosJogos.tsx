@@ -6,6 +6,7 @@ import type { ProximoJogo } from '@/app/api/proximos/route'
 
 const COMP_LABEL: Record<string, string> = {
   'copa-do-brasil': 'Copa do Brasil',
+  'brasileirao': 'Brasileirão',
 }
 
 function formatDataJogo(iso: string): { data: string; hora: string } {
@@ -37,16 +38,19 @@ function JogoCard({ jogo }: { jogo: ProximoJogo }) {
         <span className="text-xs font-mono text-gray-300">{hora}</span>
       </div>
 
-      <div className="flex flex-1 items-center gap-2 min-w-0 justify-between">
-        <div className="flex items-center gap-1.5 flex-1 min-w-0">
-          <Escudo src={jogo.escudoCasa} alt={jogo.timeCasa} size={20} />
-          <span className="text-sm text-gray-200 truncate">{jogo.timeCasa}</span>
+      <div className="flex flex-col flex-1 min-w-0 gap-0.5">
+        <div className="flex items-center gap-2 min-w-0 justify-between">
+          <div className="flex items-center gap-1.5 flex-1 min-w-0">
+            <Escudo src={jogo.escudoCasa} alt={jogo.timeCasa} size={20} />
+            <span className="text-sm text-gray-200 truncate">{jogo.timeCasa}</span>
+          </div>
+          <span className="text-xs text-gray-600 shrink-0 px-1">×</span>
+          <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-end">
+            <span className="text-sm text-gray-200 truncate text-right">{jogo.timeFora}</span>
+            <Escudo src={jogo.escudoFora} alt={jogo.timeFora} size={20} />
+          </div>
         </div>
-        <span className="text-xs text-gray-600 shrink-0 px-1">×</span>
-        <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-end">
-          <span className="text-sm text-gray-200 truncate text-right">{jogo.timeFora}</span>
-          <Escudo src={jogo.escudoFora} alt={jogo.timeFora} size={20} />
-        </div>
+        <span className="text-[10px] text-gray-600 sm:hidden">{comp}</span>
       </div>
 
       <span className="text-[10px] text-gray-600 shrink-0 hidden sm:block w-28 text-right">
@@ -104,7 +108,7 @@ export function ProximosJogos() {
   }, {})
 
   return (
-    <div className="space-y-6 max-w-2xl">
+    <div className="space-y-6 max-w-2xl mx-auto">
       {Object.entries(grupos).map(([dia, lista]) => {
         const { data } = formatDataJogo(lista[0].dataJogo)
         return (

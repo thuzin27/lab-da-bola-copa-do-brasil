@@ -26,6 +26,7 @@ export type Confronto = {
   status: 'completo' | 'em_andamento' | 'penaltis'
   jogado: boolean
   isSimulado: boolean
+  idApiFootball: string | null
 }
 
 export function deriveConfrontos(jogos: Jogo[], round: number): Confronto[] {
@@ -75,6 +76,11 @@ export function deriveConfrontos(jogos: Jogo[], round: number): Confronto[] {
       legs.find(l => (l.idTimeCasa ?? l.timeCasa) === teamBId)?.escudoCasa ??
       legs.find(l => (l.idTimeFora ?? l.timeFora) === teamBId)?.escudoFora ?? null
 
+    // Para stats: usar a partida mais recente já disputada (volta), ou a ida se nenhuma foi
+    const legMaisRecente = [...legs]
+      .sort((a, b) => new Date(b.dataJogo).getTime() - new Date(a.dataJogo).getTime())
+      .find(l => l.disputado) ?? ida
+
     return {
       id: [teamAId, teamBId].sort().join('|'),
       timeA: { id: teamAId, nome: ida.timeCasa, escudo: escudoA },
@@ -82,6 +88,7 @@ export function deriveConfrontos(jogos: Jogo[], round: number): Confronto[] {
       golsA, golsB, vencedorId, status,
       jogado: anyPlayed,
       isSimulado: legs.some(l => l.isSimulado === true),
+      idApiFootball: legMaisRecente.idApiFootball ?? null,
     }
   })
 }

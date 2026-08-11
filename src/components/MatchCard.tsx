@@ -3,14 +3,15 @@
 import type { Confronto } from '@/lib/bracket'
 import { Escudo } from './Escudo'
 
-export function MatchCard({ confronto }: { confronto: Confronto }) {
+export function MatchCard({ confronto, onClick }: { confronto: Confronto; onClick?: () => void }) {
   const { timeA, timeB, golsA, golsB, vencedorId, status, jogado, isSimulado } = confronto
   const wA = vencedorId === timeA.id
   const wB = vencedorId === timeB.id
 
   return (
     <article
-      className={`w-full border rounded px-2 py-1.5 text-xs ${
+      onClick={onClick}
+      className={`w-full border rounded px-2 py-1.5 text-xs ${onClick ? 'cursor-pointer hover:border-gray-500 transition-colors' : ''} ${
         isSimulado
           ? 'border-amber-700/60 bg-amber-950/30'
           : 'border-gray-700 bg-gray-900'
