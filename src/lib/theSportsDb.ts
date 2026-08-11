@@ -2,11 +2,8 @@ import { z } from 'zod'
 
 const BASE = 'https://www.thesportsdb.com/api/v1/json/123'
 const LEAGUE_ID = 4725
-const BRASILEIRAO_ID = 4351
 const SEASON = '2026'
 const ROUNDS = [1256, 128, 64, 32, 16, 8, 4, 2] as const
-// Apenas rodadas com jogos futuros confirmados — expandir conforme o calendário avança
-const BRASILEIRAO_ROUNDS = [23, 24] as const
 // Rodadas da Copa com jogos futuros possíveis (quartas em diante)
 const COPA_PROXIMOS_ROUNDS = [8, 4, 2] as const
 
@@ -72,18 +69,12 @@ export async function fetchAllRounds(): Promise<SportsDbEvent[]> {
   return perRound.flat()
 }
 
-export type TaggedEvent = SportsDbEvent & { _competicao: 'brasileirao' | 'copa-do-brasil' }
+export type TaggedEvent = SportsDbEvent & { _competicao: 'copa-do-brasil' }
 
 export async function fetchProximosEventos(): Promise<TaggedEvent[]> {
   // Sequencial para não disparar rate limit (30 req/min no plano gratuito).
   // Falha de uma rodada não interrompe as demais — retorna o que estiver disponível.
   const results: TaggedEvent[] = []
-  for (const round of BRASILEIRAO_ROUNDS) {
-    try {
-      const events = await fetchRound(BRASILEIRAO_ID, round)
-      results.push(...events.map(e => ({ ...e, _competicao: 'brasileirao' as const })))
-    } catch { /* round indisponível — segue para o próximo */ }
-  }
   for (const round of COPA_PROXIMOS_ROUNDS) {
     try {
       const events = await fetchRound(LEAGUE_ID, round)

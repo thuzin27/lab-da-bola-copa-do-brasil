@@ -5,7 +5,6 @@ import { Escudo } from './Escudo'
 import type { ProximoJogo } from '@/app/api/proximos/route'
 
 const COMP_LABEL: Record<string, string> = {
-  'brasileirao': 'Brasileirão Série A',
   'copa-do-brasil': 'Copa do Brasil',
 }
 
