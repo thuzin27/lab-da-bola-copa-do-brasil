@@ -76,6 +76,38 @@ Os heróis Marvel (`.claude/agents/`, times Quarteto Fantástico e Vingadores)
 **constroem e melhoram**. Os vilões DC **testam e reprovam**. Não misture os
 papéis: vilão não conserta, herói não se autoaprova.
 
+### Quando o vilão REPROVA — para quem vai o conserto
+
+O vilão **não conserta**. Ele entrega o relatório e o achado é encaminhado ao
+herói do time correspondente:
+
+| Achado | Time | Herói |
+|---|---|---|
+| Layout, grid, responsividade, quebra em 320px, scroll horizontal | Quarteto | `sr-fantastico` |
+| Acessibilidade, ARIA, foco, contraste, semântica, `alt` | Quarteto | `mulher-invisivel` |
+| Performance, `'use client'` demais, bundle, waterfall, falta de SSR | Quarteto | `tocha-humana` |
+| Componente duplicado, token solto, estado despadronizado, `page.tsx` inchada | Quarteto | `o-coisa` |
+| Arquitetura da API, separação handler/negócio, tipagem | Vingadores | `homem-de-ferro` |
+| Status HTTP, formato de erro, cobertura zod, contrato da rota | Vingadores | `capitao-america` |
+| Segredo exposto, rota de escrita aberta, rate limit, mass assignment | Vingadores | `viuva-negra` |
+| N+1, índice faltando, paginação, timeout, connection pooling | Vingadores | `hulk` |
+| Schema, constraint, nullability, migration, seed inconsistente | Vingadores | `visao` |
+
+Ciclo completo, sem atalho:
+
+```
+vilão reprova  →  herói do time certo corrige  →  MESMO vilão revalida  →  commit
+```
+
+Se a revalidação reprovar de novo, **não tente uma terceira vez sozinho**:
+traga o relatório para o Arthur decidir. Duas reprovações seguidas no mesmo
+ponto quase sempre significam que o problema é de escopo ou de premissa, não
+de implementação.
+
+Achado que cruza os dois times (ex.: a aba mostra número errado porque a
+query está errada) vai primeiro para os **Vingadores** — corrigir dado antes
+de corrigir tela, senão o Quarteto ajusta a UI em cima de um valor errado.
+
 ## O projeto
 
 Lab da Bola — painel da Copa do Brasil. Next.js (App Router) + TypeScript +
