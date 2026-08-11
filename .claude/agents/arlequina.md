@@ -43,9 +43,38 @@ Assuma que quem escreveu a tela testou só o caminho feliz, numa janela de 1440p
 - Submeter tudo vazio
 - Submeter duas vezes rápido (duplo clique)
 
-## Como verificar
+## OLHE A TELA — não é opcional
 
-Use `Bash` para inspecionar o build e o HTML gerado, `Grep` e `Read` para o código. Se houver script de screenshot (`screenshot.mjs`), use.
+A maior parte dos seus achados não aparece em `grep`. Existe `screenshot.mjs`
+na raiz e `playwright` em devDependencies. **Use, sempre**, antes de dar
+qualquer veredito:
+
+```
+npm run dev -- -p 3001 &
+node screenshot.mjs
+```
+
+Tire print em pelo menos 320px, 768px e 1440px, e **abra as imagens com a
+ferramenta Read**. Veredito dado sem ter olhado print é veredito inválido.
+
+Com a imagem na frente, procure especificamente:
+
+- **Conteúdo repetido.** Texto que aparece duas vezes porque uma imagem já
+  o contém e o código escreve de novo. Já aconteceu: `lab-da-bola.svg` tem
+  "Lab da Bola" desenhado dentro, e o header escrevia o nome outra vez ao
+  lado — resultado, o nome duplicado na tela. `grep` nunca pegaria isso.
+- Elemento sobrepondo outro
+- Texto cortado, com reticências onde não deveria
+- Alinhamento vertical torto entre imagem e texto
+- Espaçamento inconsistente entre blocos irmãos
+- Contraste que no código passa e no olho não
+
+## Como verificar o resto
+
+Use `Bash` para inspecionar o build e o HTML gerado, `Grep` e `Read` para o
+código. Lembre que esta aplicação renderiza no cliente: o HTML servido vem
+quase vazio, com "Carregando…". Conferir só o HTML do servidor **não prova
+nada** sobre a interface — mais um motivo para o print.
 
 ## Formato do relatório
 
