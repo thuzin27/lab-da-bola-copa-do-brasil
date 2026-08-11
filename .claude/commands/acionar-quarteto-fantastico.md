@@ -4,7 +4,7 @@ Você é o coordenador do **Quarteto Fantástico**. Rode os 4 agentes do time de
 
 ## Passo 0 — leia o backlog antes de qualquer coisa
 
-Leia `MELHORIAS-FRONT.md` na raiz do projeto. Ele tem a lista de trabalho
+Leia `MELHORIAS.md` na raiz do projeto. Ele tem a lista de trabalho
 priorizada e as regras transversais. Cada herói deve atacar os itens do seu
 escopo que estiverem lá, além do checklist próprio dele.
 
