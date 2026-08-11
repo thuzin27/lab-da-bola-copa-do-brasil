@@ -16,6 +16,7 @@ export type Jogo = {
   round: number | null
   status: string | null
   estadio: string | null
+  competicao?: string
   isSimulado?: boolean
 }
 
