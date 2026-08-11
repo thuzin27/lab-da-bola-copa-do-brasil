@@ -10,6 +10,7 @@ import { BracketDesktop } from './BracketDesktop'
 import { BracketMobile } from './BracketMobile'
 import { FasesAnteriores } from './FasesAnteriores'
 import { SimulacaoForm } from './SimulacaoForm'
+import { ProximosJogos } from './ProximosJogos'
 
 // ─── Abas ────────────────────────────────────────────────────────────────────
 
@@ -17,6 +18,7 @@ const ABAS = [
   { id: 'chaveamento',       label: 'Chaveamento' },
   { id: 'fases-anteriores',  label: 'Fases anteriores' },
   { id: 'simulacao',         label: 'Simulação' },
+  { id: 'proximos-jogos',    label: 'Próximos jogos' },
 ] as const
 
 type AbaId = typeof ABAS[number]['id']
@@ -80,6 +82,11 @@ export function App() {
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchJogos() }, [fetchJogos])
+
+  useEffect(() => {
+    const idx = ABAS.findIndex(a => a.id === abaAtiva)
+    tabRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
+  }, [abaAtiva])
 
   function reload() {
     setLoading(true)
@@ -224,6 +231,16 @@ export function App() {
                 jogosReais={jogosReais}
                 onSimulacaoChange={setJogosSimulados}
               />
+            </div>
+
+            {/* ── Painel: Próximos jogos (task 05) ─────────────────────── */}
+            <div
+              role="tabpanel"
+              id="panel-proximos-jogos"
+              aria-labelledby="tab-proximos-jogos"
+              hidden={abaAtiva !== 'proximos-jogos'}
+            >
+              {abaAtiva === 'proximos-jogos' && <ProximosJogos />}
             </div>
           </>
         )}
