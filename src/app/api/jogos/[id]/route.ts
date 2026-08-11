@@ -2,14 +2,23 @@ import { NextRequest } from 'next/server'
 import { patchSchema } from '@/lib/schemas'
 import { updateJogo, deleteJogo, JogoNotFoundError } from '@/lib/jogos'
 import { parseId } from '@/lib/utils'
-import { badRequest, notFound, serverError } from '@/lib/responses'
+import { badRequest, unauthorized, notFound, serverError } from '@/lib/responses'
 
 export const maxDuration = 10
+
+function isAuthorized(request: NextRequest): boolean {
+  const auth = request.headers.get('authorization')
+  if (auth === `Bearer ${process.env.CRON_SECRET}`) return true
+  const manual = request.headers.get('x-cron-secret')
+  if (manual === process.env.CRON_SECRET) return true
+  return false
+}
 
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!isAuthorized(request)) return unauthorized('Não autorizado')
   try {
     const { id } = await params
     const numId = parseId(id)
@@ -30,9 +39,10 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!isAuthorized(request)) return unauthorized('Não autorizado')
   try {
     const { id } = await params
     const numId = parseId(id)

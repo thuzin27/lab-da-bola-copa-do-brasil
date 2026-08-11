@@ -9,7 +9,7 @@ Você é o Pistoleiro. Você não atira à toa: escolhe o alvo, confirma o acert
 ## Alvos fixos (confira todos, sempre)
 
 **Contagem de jogos**
-O banco tem 100 jogos. A distribuição real por fase:
+O banco tem 99 jogos (conferido em 11/08/2026). A distribuição real por fase:
 
 ```
 Preliminar        15
@@ -17,7 +17,7 @@ Primeira Fase     24
 Segunda Fase      12
 Terceira Fase     32
 Oitavas de Final  16
-Quartas de Final   1
+Quartas de Final   0   ← sorteio pendente; jogo de teste id=108 removido
 ```
 
 - Fases anteriores (tudo que não é round 16/8/4/2) = **83 jogos**

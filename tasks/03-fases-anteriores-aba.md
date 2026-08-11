@@ -13,9 +13,9 @@ carregando igual, só que dentro da aba.
 - `src/app/page.tsx` — componente `FasesAnteriores` (linha ~283)
 - `src/components/` — destino após a extração da tarefa 02
 
-## Números reais (conferidos no banco em 10/08/2026)
+## Números reais (conferidos no banco em 11/08/2026)
 
-O banco tem **100 jogos**:
+O banco tem **99 jogos** (jogo de teste id=108 removido em 11/08):
 
 ```
 Preliminar        15
@@ -23,7 +23,7 @@ Primeira Fase     24
 Segunda Fase      12
 Terceira Fase     32
 Oitavas de Final  16
-Quartas de Final   1
+Quartas de Final   0   ← sorteio pendente
 ```
 
 "Fases anteriores" = tudo que não é bracket (rounds 16, 8, 4, 2) = **83 jogos**.

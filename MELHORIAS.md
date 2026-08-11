@@ -9,8 +9,10 @@ Levantada a partir do código real na `main` em 10/08/2026, não de memória.
 
 ## Estado atual — o que já está pronto
 
-- Sync com a TheSportsDB, 99 jogos da Copa do Brasil 2026, com escudos,
-  `round`, `status` e `estadio`
+- Sync com a TheSportsDB, **99 jogos** da Copa do Brasil 2026 (11/08/2026),
+  com escudos, `round`, `status` e `estadio`:
+  Preliminar 15 · Primeira Fase 24 · Segunda Fase 12 · Terceira Fase 32 ·
+  Oitavas 16 · Quartas 0 (sorteio pendente)
 - Chaveamento das oitavas até a final, com agregado, detecção de pênaltis e
   slots "A definir"
 - Bug de fuso corrigido (`strTime` já vem em UTC)

@@ -1,9 +1,17 @@
 import { NextRequest } from 'next/server'
 import { jogoSchema } from '@/lib/schemas'
 import { listJogos, createJogo } from '@/lib/jogos'
-import { badRequest, serverError } from '@/lib/responses'
+import { badRequest, unauthorized, serverError } from '@/lib/responses'
 
 export const maxDuration = 10
+
+function isAuthorized(request: NextRequest): boolean {
+  const auth = request.headers.get('authorization')
+  if (auth === `Bearer ${process.env.CRON_SECRET}`) return true
+  const manual = request.headers.get('x-cron-secret')
+  if (manual === process.env.CRON_SECRET) return true
+  return false
+}
 
 export async function GET() {
   try {
@@ -15,6 +23,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  if (!isAuthorized(request)) return unauthorized('Não autorizado')
   try {
     const body = await request.json()
     const parsed = jogoSchema.safeParse(body)

@@ -49,7 +49,7 @@ export async function syncJogos(): Promise<SyncResult> {
 
   let criados = 0
   let atualizados = 0
-  let ignorados = 0
+  const ignorados = 0
   const porFase: Record<string, number> = {}
 
   for (const ev of events) {
