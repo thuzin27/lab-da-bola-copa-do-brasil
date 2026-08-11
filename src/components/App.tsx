@@ -213,7 +213,7 @@ export function App() {
               <FasesAnteriores jogos={jogosReais} />
             </div>
 
-            {/* ── Painel: Simulação (task 04) ──────────────────────────── */}
+            {/* ── Painel: Simulação (task 06) ──────────────────────────── */}
             <div
               role="tabpanel"
               id="panel-simulacao"
@@ -221,9 +221,8 @@ export function App() {
               hidden={abaAtiva !== 'simulacao'}
             >
               <SimulacaoForm
-                jogosSimulados={jogosSimulados}
-                onSimular={j => setJogosSimulados(prev => [...prev, j])}
-                onResetar={() => setJogosSimulados([])}
+                jogosReais={jogosReais}
+                onSimulacaoChange={setJogosSimulados}
               />
             </div>
           </>
