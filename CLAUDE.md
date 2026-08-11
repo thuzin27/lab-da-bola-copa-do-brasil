@@ -42,6 +42,40 @@ raciocínio, nos relatórios de subagente e nas mensagens de commit. Nomes de
 arquivo, código, comandos e termos técnicos consagrados (build, commit,
 deploy, merge) ficam como estão.
 
+## Processo — validação obrigatória antes de commitar
+
+**Nenhuma alteração é commitada sem passar pelo Esquadrão Suicida.** Os
+vilões existem para tentar quebrar o que foi feito; commit sem veredito é
+commit não verificado.
+
+Fluxo, sem exceção:
+
+1. Implemente a alteração
+2. Dispare o(s) vilão(ões) correspondente(s) via subagente
+3. Só commite com **VEREDITO: APROVADO**
+4. Se vier REPROVADO: corrija e rode o vilão de novo. Não commite "para não
+   perder o trabalho" — use `git stash` se precisar
+
+Qual vilão chamar:
+
+| Tipo de alteração | Vilão |
+|---|---|
+| Layout, CSS, componente, header, responsividade, estado vazio | `arlequina` |
+| Aba, listagem, contagem de jogos, bracket, agregado, simulação | `pistoleiro` |
+| Qualquer coisa que toque banco, formulário ou rota de escrita | `feiticeira` (obrigatória) |
+| Antes de abrir PR ou mergear, sempre | `capitao-bumerangue` |
+
+Quando a alteração cruza áreas, chame mais de um. A `feiticeira` tem poder de
+veto: um único FALHOU dela reprova a rodada inteira, mesmo que os outros
+tenham aprovado.
+
+O `capitao-bumerangue` roda por último, no projeto inteiro (`tsc`, `lint`,
+`next build`), e é o único que libera o PR.
+
+Os heróis Marvel (`.claude/agents/`, times Quarteto Fantástico e Vingadores)
+**constroem e melhoram**. Os vilões DC **testam e reprovam**. Não misture os
+papéis: vilão não conserta, herói não se autoaprova.
+
 ## O projeto
 
 Lab da Bola — painel da Copa do Brasil. Next.js (App Router) + TypeScript +
