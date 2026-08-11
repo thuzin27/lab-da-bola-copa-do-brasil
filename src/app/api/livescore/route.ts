@@ -6,6 +6,7 @@ export type LiveScore = {
   idExterno: string
   golsCasa: number | null
   golsFora: number | null
+  status: string | null
 }
 
 function parseScore(s: string | null | undefined): number | null {
@@ -21,6 +22,7 @@ export async function GET() {
       idExterno: e.idEvent,
       golsCasa: parseScore(e.intHomeScore),
       golsFora: parseScore(e.intAwayScore),
+      status: e.strStatus ?? null,
     }))
     return Response.json(scores)
   } catch {

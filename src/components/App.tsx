@@ -92,17 +92,34 @@ export function App() {
 
   useEffect(() => {
     if (abaAtiva !== 'chaveamento') return
-    async function fetchLive() {
+    const LIVE_STATUSES = new Set(['1H', 'HT', '2H', 'ET', 'PEN'])
+    let intervalId: ReturnType<typeof setInterval> | null = null
+
+    async function fetchLive(): Promise<boolean> {
       try {
         const res = await fetch('/api/livescore')
-        if (!res.ok) return
-        const data: { idExterno: string; golsCasa: number | null; golsFora: number | null }[] = await res.json()
+        if (!res.ok) return false
+        const data: { idExterno: string; golsCasa: number | null; golsFora: number | null; status: string | null }[] = await res.json()
         setLiveScores(Object.fromEntries(data.map(s => [s.idExterno, { golsCasa: s.golsCasa, golsFora: s.golsFora }])))
-      } catch { /* falha silenciosa — mostra último valor conhecido */ }
+        return data.some(s => LIVE_STATUSES.has(s.status ?? ''))
+      } catch {
+        return false
+      }
     }
-    void fetchLive()
-    const id = setInterval(() => { void fetchLive() }, 60_000)
-    return () => clearInterval(id)
+
+    void (async () => {
+      const hasLive = await fetchLive()
+      if (!hasLive) return
+      intervalId = setInterval(async () => {
+        const stillLive = await fetchLive()
+        if (!stillLive && intervalId !== null) {
+          clearInterval(intervalId)
+          intervalId = null
+        }
+      }, 60_000)
+    })()
+
+    return () => { if (intervalId !== null) clearInterval(intervalId) }
   }, [abaAtiva])
 
   function reload() {
